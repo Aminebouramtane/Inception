@@ -40,8 +40,21 @@ services:
     restart: always
 
 volumes:
-  db_data:
   wordpress_data:
+      driver: local
+      name: wordpress_data
+      driver_opts:
+        type: none
+        device: /home/abouramt/data/wordpress
+        o: bind
+    
+  db_data:
+      driver: local
+      name: db_data
+      driver_opts:
+        type: none
+        device: /home/abouramt/data/mariadb
+        o: bind
 
 networks:
   inception:

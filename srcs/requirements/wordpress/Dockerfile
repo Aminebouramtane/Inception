@@ -11,16 +11,15 @@ WORKDIR /var/www/html
 # Download WordPress
 RUN wget https://wordpress.org/latest.tar.gz && \
     tar -xzf latest.tar.gz && \
-    rm latest.tar.gz && \
-    mv wordpress /usr/src/wordpress && \
-    rm -rf wordpress
+    rm latest.tar.gz
 
 # Install WP-CLI and common PHP extensions required by WP-CLI and WordPress
 RUN apt-get update && apt-get install -y \
-    php-cli php-mbstring php-xml php-zip php-curl && \
+    php-cli php-mbstring php-xml php-zip php-curl php-json wget curl && \
     curl -o /usr/local/bin/wp https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
     chmod +x /usr/local/bin/wp && \
-    rm -rf /var/lib/apt/lists/* || true
+    rm -rf /var/lib/apt/lists/*
+
 
 # Copy configuration files
 COPY tools/www.conf /etc/php/7.4/fpm/pool.d/
